@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 
-export type TaskStatus = "concluido" | "cancelado";
+export type TaskStatus = "concluido" | "nao_concluido";
 
 interface TaskStatusBadgeProps {
   status: TaskStatus;
@@ -15,12 +15,12 @@ const statusConfig = {
       borderColor: "var(--status-concluido-bg)",
     },
   },
-  cancelado: {
-    label: "Cancelado",
+  nao_concluido: {
+    label: "Não concluído",
     style: {
-      backgroundColor: "var(--status-cancelado-bg)",
-      color: "var(--status-cancelado-text)",
-      borderColor: "var(--status-cancelado-bg)",
+      backgroundColor: "var(--status-nao_concluido-bg)",
+      color: "var(--status-nao_concluido-text)",
+      borderColor: "var(--status-nao_concluido-bg)",
     },
   },
 };

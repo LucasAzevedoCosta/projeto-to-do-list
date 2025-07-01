@@ -144,8 +144,8 @@
   --status-concluido-bg: #166534;
   --status-concluido-text: #dcfce7;
 
-  --status-cancelado-bg: #991b1b;
-  --status-cancelado-text: #fee2e2;
+  --status-nao_concluido-bg: #991b1b;
+  --status-nao_concluido-text: #fee2e2;
 }
 
 @layer base {

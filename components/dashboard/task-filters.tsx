@@ -63,7 +63,7 @@ export function TaskFilters({
           <SelectContent>
             <SelectItem value="all">Todos</SelectItem>
             <SelectItem value="concluido">Concluído</SelectItem>
-            <SelectItem value="cancelado">Cancelado</SelectItem>
+            <SelectItem value="nao_concluido">Não concluido</SelectItem>
           </SelectContent>
         </Select>
 

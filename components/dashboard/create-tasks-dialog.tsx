@@ -21,24 +21,31 @@ import {
 } from "@/components/ui/select";
 import { type Task } from "./task-table";
 
-interface TaskEditDialogProps {
-  task: Task | null;
+interface CreateTaskDialogProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
   onSave: (task: Task) => void;
 }
 
-export function TaskEditDialog({ task, isOpen, onOpenChange, onSave }: TaskEditDialogProps) {
-  const [formData, setFormData] = useState<Task | null>(task);
+const emptyTask: Task = {
+  id: "",
+  titulo: "",
+  descricao: "",
+  status: "nao_concluido",
+  prioridade: "baixa",
+  dataInicio: "",
+  prazo: "",
+};
 
-  useEffect(() => {
-    setFormData(task);
-  }, [task]);
-
-  if (!task || !formData) return null;
+export function CreateTaskDialog({ isOpen, onOpenChange, onSave }: CreateTaskDialogProps) {
+  const [formData, setFormData] = useState<Task>(emptyTask);
 
   const handleSave = () => {
-    onSave(formData);
+    const newTask = {
+      ...formData
+    };
+    onSave(newTask);
+    setFormData(emptyTask);
     onOpenChange(false);
   };
 
@@ -46,7 +53,7 @@ export function TaskEditDialog({ task, isOpen, onOpenChange, onSave }: TaskEditD
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
-          <DialogTitle>Editar Tarefa</DialogTitle>
+          <DialogTitle>Criar Tarefa</DialogTitle>
         </DialogHeader>
         
         <div className="space-y-4 py-4">
@@ -138,9 +145,7 @@ export function TaskEditDialog({ task, isOpen, onOpenChange, onSave }: TaskEditD
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             Cancelar
           </Button>
-          <Button onClick={handleSave}>
-            Salvar Alterações
-          </Button>
+          <Button onClick={handleSave}>Criar Tarefa</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

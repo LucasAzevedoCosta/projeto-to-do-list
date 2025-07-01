@@ -19,7 +19,7 @@ export interface Task {
   status: TaskStatus;
   dataInicio: string;
   prazo: string;
-  dataCriacao: string;
+  dataCriacao?: string;
   prioridade: TaskPriority;
   descricao: string;
 }

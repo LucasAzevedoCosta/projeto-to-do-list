@@ -1,7 +1,6 @@
 "use client";
 
-import { Logout } from "@/components/logout";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { TaskListCard } from "@/components/dashboard/task-list-card";
 import {
@@ -12,15 +11,32 @@ import { TaskViewDialog } from "@/components/dashboard/task-view-dialog";
 import { TaskEditDialog } from "@/components/dashboard/task-edit-dialog";
 import { DeleteConfirmationDialog } from "@/components/dashboard/delete-confirmation-dialog";
 import { type Task } from "@/components/dashboard/task-table";
-import { mockTasks } from "@/lib/data/tasks";
 
 export default function Dashboard() {
-  const [tasks, setTasks] = useState<Task[]>(mockTasks);
+  const [tasks, setTasks] = useState<Task[]>([]);
   const [filters, setFilters] = useState<TaskFiltersType>({
     search: "",
     status: "all",
     priority: "all",
   });
+
+  useEffect(() => {
+    async function fetchTasks() {
+      try {
+        const res = await fetch("/api/tasks", {
+          cache: "no-store",
+          credentials: "include",
+        });
+        if (!res.ok) throw new Error("Erro ao buscar tasks");
+        const data = await res.json();
+        setTasks(data);
+      } catch (error) {
+        console.error(error);
+        setTasks([]);
+      }
+    }
+    fetchTasks();
+  }, []);
 
   const [viewTask, setViewTask] = useState<Task | null>(null);
   const [editTask, setEditTask] = useState<Task | null>(null);
@@ -79,40 +95,42 @@ export default function Dashboard() {
   };
 
   return (
-  <div className="min-h-screen bg-background text-foreground">
-    <DashboardHeader />
+    <div className="min-h-screen bg-background text-foreground">
+      <DashboardHeader />
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <TaskFilters
+          filters={filters}
+          onFiltersChange={setFilters}
+          onClearFilters={handleClearFilters}
+        />
 
-    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <TaskFilters
-        filters={filters}
-        onFiltersChange={setFilters}
-        onClearFilters={handleClearFilters}
+        <TaskListCard
+          tasks={filteredTasks}
+          onTaskAction={handleTaskAction}
+          onTaskCreated={(newTask) => setTasks((prev) => [...prev, newTask])}
+        />
+      </main>
+
+      {/* Dialogs */}
+      <TaskViewDialog
+        task={viewTask}
+        isOpen={!!viewTask}
+        onOpenChange={(open) => !open && setViewTask(null)}
       />
 
-      <TaskListCard tasks={filteredTasks} onTaskAction={handleTaskAction} />
-    </main>
+      <TaskEditDialog
+        task={editTask}
+        isOpen={!!editTask}
+        onOpenChange={(open) => !open && setEditTask(null)}
+        onSave={handleEditSave}
+      />
 
-    {/* Dialogs */}
-    <TaskViewDialog
-      task={viewTask}
-      isOpen={!!viewTask}
-      onOpenChange={(open) => !open && setViewTask(null)}
-    />
-
-    <TaskEditDialog
-      task={editTask}
-      isOpen={!!editTask}
-      onOpenChange={(open) => !open && setEditTask(null)}
-      onSave={handleEditSave}
-    />
-
-    <DeleteConfirmationDialog
-      isOpen={!!deleteTask}
-      onOpenChange={(open) => !open && setDeleteTask(null)}
-      onConfirm={handleDeleteConfirm}
-      taskTitle={deleteTask?.titulo || ""}
-    />
-  </div>
-);
-
+      <DeleteConfirmationDialog
+        isOpen={!!deleteTask}
+        onOpenChange={(open) => !open && setDeleteTask(null)}
+        onConfirm={handleDeleteConfirm}
+        taskTitle={deleteTask?.titulo || ""}
+      />
+    </div>
+  );
 }

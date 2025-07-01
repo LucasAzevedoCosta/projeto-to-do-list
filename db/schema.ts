@@ -3,8 +3,16 @@ import {
   text,
   timestamp,
   boolean,
-  integer,
+  pgEnum,
+  uuid,
 } from "drizzle-orm/pg-core";
+
+export const priorityEnum = pgEnum("task_priority", [
+  "urgente",
+  "alta",
+  "media",
+  "baixa",
+]);
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -66,4 +74,20 @@ export const verification = pgTable("verification", {
   ),
 });
 
-export const schema = { user, session, account, verification };
+export const task = pgTable("task", {
+  id: text("id").primaryKey(),
+  title: text("title").notNull(),
+  status: text("status").notNull(),
+  startDate: timestamp("start_date").notNull(),
+  createdAt: timestamp("created_at").$defaultFn(
+    () => /* @__PURE__ */ new Date()
+  ),
+  deadline: timestamp("deadline").notNull(),
+  priority: priorityEnum("priority").default("baixa").notNull(),
+  description: text("description").notNull(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+});
+
+export const schema = { user, session, account, verification, task };

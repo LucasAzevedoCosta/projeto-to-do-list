@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { User } from "lucide-react";
 import { ProfileDialog } from "./profile-dialog";
+import { Logout } from "../logout";
 
 export function DashboardHeader() {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -17,6 +18,7 @@ export function DashboardHeader() {
             <h1 className="text-2xl font-bold text-foreground">Minha lista</h1>
 
             <div className="flex items-center space-x-3">
+              <Logout />
               <Button
                 variant="ghost"
                 onClick={() => setIsProfileOpen(true)}
