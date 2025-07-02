@@ -28,8 +28,18 @@ interface TaskEditDialogProps {
   onSave: (task: Task) => void;
 }
 
-export function TaskEditDialog({ task, isOpen, onOpenChange, onSave }: TaskEditDialogProps) {
+export function TaskEditDialog({
+  task,
+  isOpen,
+  onOpenChange,
+  onSave,
+}: TaskEditDialogProps) {
   const [formData, setFormData] = useState<Task | null>(task);
+
+  function formatDateForInput(date: string | Date | null | undefined): string {
+    if (!date) return "";
+    return new Date(date).toISOString().split("T")[0];
+  }
 
   useEffect(() => {
     setFormData(task);
@@ -48,14 +58,16 @@ export function TaskEditDialog({ task, isOpen, onOpenChange, onSave }: TaskEditD
         <DialogHeader>
           <DialogTitle>Editar Tarefa</DialogTitle>
         </DialogHeader>
-        
+
         <div className="space-y-4 py-4">
           <div className="space-y-2">
             <Label htmlFor="titulo">Título</Label>
             <Input
               id="titulo"
               value={formData.titulo}
-              onChange={(e) => setFormData({ ...formData, titulo: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, titulo: e.target.value })
+              }
               placeholder="Digite o título da tarefa"
             />
           </div>
@@ -65,7 +77,9 @@ export function TaskEditDialog({ task, isOpen, onOpenChange, onSave }: TaskEditD
             <Textarea
               id="descricao"
               value={formData.descricao}
-              onChange={(e) => setFormData({ ...formData, descricao: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, descricao: e.target.value })
+              }
               placeholder="Digite a descrição da tarefa"
               rows={3}
             />
@@ -76,7 +90,7 @@ export function TaskEditDialog({ task, isOpen, onOpenChange, onSave }: TaskEditD
               <Label htmlFor="status">Status</Label>
               <Select
                 value={formData.status}
-                onValueChange={(value: "concluido" | "nao_concluido") => 
+                onValueChange={(value: "concluido" | "nao_concluido") =>
                   setFormData({ ...formData, status: value })
                 }
               >
@@ -94,9 +108,9 @@ export function TaskEditDialog({ task, isOpen, onOpenChange, onSave }: TaskEditD
               <Label htmlFor="prioridade">Prioridade</Label>
               <Select
                 value={formData.prioridade}
-                onValueChange={(value: "urgente" | "alta" | "media" | "baixa") => 
-                  setFormData({ ...formData, prioridade: value })
-                }
+                onValueChange={(
+                  value: "urgente" | "alta" | "media" | "baixa"
+                ) => setFormData({ ...formData, prioridade: value })}
               >
                 <SelectTrigger>
                   <SelectValue />
@@ -117,8 +131,10 @@ export function TaskEditDialog({ task, isOpen, onOpenChange, onSave }: TaskEditD
               <Input
                 id="dataInicio"
                 type="date"
-                value={formData.dataInicio}
-                onChange={(e) => setFormData({ ...formData, dataInicio: e.target.value })}
+                value={formatDateForInput(formData.dataInicio)}
+                onChange={(e) =>
+                  setFormData({ ...formData, dataInicio: e.target.value })
+                }
               />
             </div>
 
@@ -127,8 +143,10 @@ export function TaskEditDialog({ task, isOpen, onOpenChange, onSave }: TaskEditD
               <Input
                 id="prazo"
                 type="date"
-                value={formData.prazo}
-                onChange={(e) => setFormData({ ...formData, prazo: e.target.value })}
+                value={formatDateForInput(formData.prazo)}
+                onChange={(e) =>
+                  setFormData({ ...formData, prazo: e.target.value })
+                }
               />
             </div>
           </div>
@@ -138,9 +156,7 @@ export function TaskEditDialog({ task, isOpen, onOpenChange, onSave }: TaskEditD
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             Cancelar
           </Button>
-          <Button onClick={handleSave}>
-            Salvar Alterações
-          </Button>
+          <Button onClick={handleSave}>Salvar Alterações</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -1,12 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import { deleteTask, updateTask } from "@/lib/tasks/task-controller";
 
-export async function PUT(req: NextRequest, context: { params: { id: string } }) {
+export async function PUT(req: NextRequest) {
   try {
-    const taskId = context.params.id;
+    const id = req.nextUrl.pathname.split("/").pop();
     const body = await req.json();
 
-    const updated = await updateTask(taskId, body);
+    if (!id) {
+      return NextResponse.json(
+        { error: "ID não encontrado na URL" },
+        { status: 400 }
+      );
+    }
+
+    const updated = await updateTask(id, body);
     return NextResponse.json(updated);
   } catch (error) {
     console.error("Erro ao atualizar tarefa:", error);
@@ -14,11 +21,18 @@ export async function PUT(req: NextRequest, context: { params: { id: string } })
   }
 }
 
-export async function DELETE(req: NextRequest, context: { params: { id: string } }) {
+export async function DELETE(req: NextRequest) {
   try {
-    const taskId = context.params.id;
+    const id = req.nextUrl.pathname.split("/").pop();
 
-    const deleted = await deleteTask(taskId);
+    if (!id) {
+      return NextResponse.json(
+        { error: "ID não encontrado na URL" },
+        { status: 400 }
+      );
+    }
+
+    const deleted = await deleteTask(id);
     return NextResponse.json(deleted);
   } catch (error) {
     console.error("Erro ao deletar tarefa:", error);

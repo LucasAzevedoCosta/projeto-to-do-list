@@ -146,7 +146,7 @@ export function TaskViewDialog({
                     Criada em
                   </p>
                   <p className="text-sm text-muted-foreground">
-                    {formatDate(task.dataCriacao)}
+                    {task.dataCriacao ? formatDate(task.dataCriacao) : 'Sem data de criação'}
                   </p>
                 </div>
               </div>
