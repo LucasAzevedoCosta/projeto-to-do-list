@@ -43,7 +43,7 @@ export async function createTask(input: TaskInput) {
   const result = await db.insert(task).values(newTask).returning();
 
   const created = result[0];
-  
+
   return {
     id: created.id,
     titulo: created.title,
@@ -54,14 +54,10 @@ export async function createTask(input: TaskInput) {
     dataCriacao: created.createdAt,
     prazo: created.deadline,
     dataInicio: created.startDate,
-  };;
+  };
 }
 
-export async function updateTask(
-  taskId: string,
-  userId: string,
-  input: Partial<TaskInput>
-) {
+export async function updateTask(taskId: string, input: Partial<TaskInput>) {
   const updated = await db
     .update(task)
     .set({
@@ -72,17 +68,26 @@ export async function updateTask(
       ...(input.dataInicio && { startDate: new Date(input.dataInicio) }),
       ...(input.prazo && { deadline: new Date(input.prazo) }),
     })
-    .where(and(eq(task.id, taskId), eq(task.userId, userId)))
+    .where(eq(task.id, taskId))
     .returning();
 
-  return updated[0];
+  const result = updated[0];
+
+  return {
+    id: result.id,
+    titulo: result.title,
+    descricao: result.description,
+    status: result.status,
+    prioridade: result.priority,
+    userId: result.userId,
+    dataCriacao: result.createdAt,
+    prazo: result.deadline,
+    dataInicio: result.startDate,
+  };
 }
 
-export async function deleteTask(taskId: string, userId: string) {
-  const deleted = await db
-    .delete(task)
-    .where(and(eq(task.id, taskId), eq(task.userId, userId)))
-    .returning();
+export async function deleteTask(taskId: string) {
+  const deleted = await db.delete(task).where(eq(task.id, taskId)).returning();
 
   return deleted[0];
 }

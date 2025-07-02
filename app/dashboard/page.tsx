@@ -11,6 +11,7 @@ import { TaskViewDialog } from "@/components/dashboard/task-view-dialog";
 import { TaskEditDialog } from "@/components/dashboard/task-edit-dialog";
 import { DeleteConfirmationDialog } from "@/components/dashboard/delete-confirmation-dialog";
 import { type Task } from "@/components/dashboard/task-table";
+import { deleteTaskApi, updateTaskById } from "@/lib/tasks/task-helpers";
 
 export default function Dashboard() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -73,18 +74,30 @@ export default function Dashboard() {
     }
   };
 
-  const handleEditSave = (updatedTask: Task) => {
-    setTasks(
-      tasks.map((task) => (task.id === updatedTask.id ? updatedTask : task))
-    );
-  };
-
-  const handleDeleteConfirm = () => {
-    if (deleteTask) {
-      setTasks(tasks.filter((task) => task.id !== deleteTask.id));
-      setDeleteTask(null);
+  const handleEditSave = async (updatedTask: Task) => {
+    try {
+      const updated = await updateTaskById(updatedTask.id, updatedTask);
+      setTasks((prevTasks) =>
+        prevTasks.map((task) => (task.id === updated.id ? updated : task))
+      );
+      setEditTask(null); // fecha o modal
+    } catch (error) {
+      console.error("Erro ao salvar tarefa:", error);
+      alert("Erro ao atualizar tarefa.");
     }
   };
+
+  const handleDeleteConfirm = async () => {
+  if (!deleteTask) return;
+
+  try {
+    await deleteTaskApi(deleteTask.id);
+    setTasks(tasks.filter((task) => task.id !== deleteTask.id));
+    setDeleteTask(null);
+  } catch (error) {
+    console.error("Erro ao deletar tarefa:", error);
+  }
+};
 
   const handleClearFilters = () => {
     setFilters({

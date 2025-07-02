@@ -1,14 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { deleteTask, updateTask } from "@/lib/tasks/task-controller";
-import { getUserIdFromRequest } from "@/lib/auth/auth-helper";
 
-export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(req: NextRequest, context: { params: { id: string } }) {
   try {
-    const userId = await getUserIdFromRequest(req);
-    const taskId = params.id;
+    const taskId = context.params.id;
     const body = await req.json();
 
-    const updated = await updateTask(taskId, userId, body);
+    const updated = await updateTask(taskId, body);
     return NextResponse.json(updated);
   } catch (error) {
     console.error("Erro ao atualizar tarefa:", error);
@@ -16,12 +14,11 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
   }
 }
 
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(req: NextRequest, context: { params: { id: string } }) {
   try {
-    const userId = await getUserIdFromRequest(req);
-    const taskId = params.id;
+    const taskId = context.params.id;
 
-    const deleted = await deleteTask(taskId, userId);
+    const deleted = await deleteTask(taskId);
     return NextResponse.json(deleted);
   } catch (error) {
     console.error("Erro ao deletar tarefa:", error);
