@@ -12,6 +12,7 @@ import {
 import { TaskActions } from "./task-actions";
 import { TaskStatusBadge, type TaskStatus } from "./task-status-badge";
 import { PriorityBadge, type TaskPriority } from "./priority-badge";
+import { formatDate } from "@/lib/helpers";
 
 export interface Task {
   id: string;
@@ -35,14 +36,6 @@ export function TaskTable({ tasks, onTaskAction }: TaskTableProps) {
   const handleTaskAction = (taskId: string, action: string) => {
     onTaskAction(taskId, action);
     setSelectedTask(null);
-  };
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("pt-BR", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    });
   };
 
   const isOverdue = (prazo: string, status: TaskStatus) => {

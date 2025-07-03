@@ -9,13 +9,42 @@ import {
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { User, Mail, Calendar, CheckCircle } from "lucide-react";
+import { useEffect, useState } from "react";
+import { formatDate } from "@/lib/helpers";
 
 interface ProfileDialogProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
+interface UserProfile {
+  name: string;
+  email: string;
+  createdAt: string;
+  completedTasksCount: number;
+  tags: string[];
+}
+
 export function ProfileDialog({ isOpen, onOpenChange }: ProfileDialogProps) {
+  const [user, setUser] = useState<UserProfile | null>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    async function fetchUser() {
+      try {
+        const res = await fetch("/api/user", { credentials: "include" });
+        if (!res.ok) throw new Error("Erro ao carregar dados do usuário.");
+        const data = await res.json();
+        setUser(data);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    fetchUser();
+  }, [isOpen]);
+
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
@@ -27,12 +56,13 @@ export function ProfileDialog({ isOpen, onOpenChange }: ProfileDialogProps) {
           <Avatar className="h-20 w-20 bg-gradient-to-br from-primary to-secondary">
             <AvatarFallback className="bg-gradient-to-br from-primary to-secondary text-card-foreground text-xl">
               <User className="h-8 w-8" />
+              {user?.name[0]}
             </AvatarFallback>
           </Avatar>
 
           <div className="text-center space-y-2">
             <h3 className="text-xl font-semibold text-foreground">
-              João Silva
+              {user?.name}
             </h3>
             <p className="text-muted-foreground">Usuário Premium</p>
           </div>
@@ -42,9 +72,7 @@ export function ProfileDialog({ isOpen, onOpenChange }: ProfileDialogProps) {
               <Mail className="h-5 w-5 text-muted-foreground" />
               <div>
                 <p className="text-sm font-medium text-foreground">Email</p>
-                <p className="text-sm text-muted-foreground">
-                  joao.silva@email.com
-                </p>
+                <p className="text-sm text-muted-foreground">{user?.name}</p>
               </div>
             </div>
 
@@ -54,7 +82,9 @@ export function ProfileDialog({ isOpen, onOpenChange }: ProfileDialogProps) {
                 <p className="text-sm font-medium text-foreground">
                   Membro desde
                 </p>
-                <p className="text-sm text-muted-foreground">Janeiro 2024</p>
+                <p className="text-sm text-muted-foreground">
+                  {user?.createdAt ? formatDate(user.createdAt) : "—"}
+                </p>
               </div>
             </div>
 

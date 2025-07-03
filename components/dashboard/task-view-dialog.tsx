@@ -11,6 +11,7 @@ import { TaskStatusBadge } from "./task-status-badge";
 import { PriorityBadge } from "./priority-badge";
 import { Calendar, Clock, FileText, AlertTriangle } from "lucide-react";
 import { type Task } from "./task-table";
+import { formatDate } from "@/lib/helpers";
 
 interface TaskViewDialogProps {
   task: Task | null;
@@ -25,13 +26,6 @@ export function TaskViewDialog({
 }: TaskViewDialogProps) {
   if (!task) return null;
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("pt-BR", {
-      day: "2-digit",
-      month: "long",
-      year: "numeric",
-    });
-  };
 
   const isOverdue = (prazo: string, status: string) => {
     if (status === "concluido") return false;
