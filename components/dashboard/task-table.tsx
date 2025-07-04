@@ -13,16 +13,17 @@ import { TaskActions } from "./task-actions";
 import { TaskStatusBadge, type TaskStatus } from "./task-status-badge";
 import { PriorityBadge, type TaskPriority } from "./priority-badge";
 import { formatDate } from "@/lib/helpers";
+import { isOverdue } from "@/lib/tasks/task-helpers";
 
 export interface Task {
   id: string;
-  titulo: string;
+  title: string;
   status: TaskStatus;
-  dataInicio: string;
-  prazo: string;
-  dataCriacao?: string;
-  prioridade: TaskPriority;
-  descricao: string;
+  startDate: string;
+  deadline: string;
+  createdAt?: string;
+  priority: TaskPriority;
+  description: string;
 }
 
 interface TaskTableProps {
@@ -36,13 +37,6 @@ export function TaskTable({ tasks, onTaskAction }: TaskTableProps) {
   const handleTaskAction = (taskId: string, action: string) => {
     onTaskAction(taskId, action);
     setSelectedTask(null);
-  };
-
-  const isOverdue = (prazo: string, status: TaskStatus) => {
-    if (status === "concluido") return false;
-    const today = new Date();
-    const deadline = new Date(prazo);
-    return deadline < today;
   };
 
   return (
@@ -63,7 +57,7 @@ export function TaskTable({ tasks, onTaskAction }: TaskTableProps) {
               Data de Início
             </TableHead>
             <TableHead className="font-semibold text-foreground">
-              Prazo
+              deadline
             </TableHead>
             <TableHead className="font-semibold text-foreground text-right">
               Ações
@@ -77,26 +71,26 @@ export function TaskTable({ tasks, onTaskAction }: TaskTableProps) {
               className="hover:bg-muted/50 transition-colors"
             >
               <TableCell className="font-medium text-foreground">
-                {task.titulo}
+                {task.title}
               </TableCell>
               <TableCell>
                 <TaskStatusBadge status={task.status} />
               </TableCell>
               <TableCell>
-                <PriorityBadge priority={task.prioridade} />
+                <PriorityBadge priority={task.priority} />
               </TableCell>
               <TableCell className="text-muted-foreground">
-                {formatDate(task.dataInicio)}
+                {formatDate(task.startDate)}
               </TableCell>
               <TableCell
                 className={`text-muted-foreground ${
-                  isOverdue(task.prazo, task.status)
+                  isOverdue(task.deadline, task.status)
                     ? "text-destructive font-medium"
                     : ""
                 }`}
               >
-                {formatDate(task.prazo)}
-                {isOverdue(task.prazo, task.status) && (
+                {formatDate(task.deadline)}
+                {isOverdue(task.deadline, task.status) && (
                   <span className="ml-1 text-destructive">⚠️</span>
                 )}
               </TableCell>

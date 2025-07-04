@@ -64,9 +64,9 @@ export function TaskEditDialog({
             <Label htmlFor="titulo">Título</Label>
             <Input
               id="titulo"
-              value={formData.titulo}
+              value={formData.title}
               onChange={(e) =>
-                setFormData({ ...formData, titulo: e.target.value })
+                setFormData({ ...formData, title: e.target.value })
               }
               placeholder="Digite o título da tarefa"
             />
@@ -76,9 +76,9 @@ export function TaskEditDialog({
             <Label htmlFor="descricao">Descrição</Label>
             <Textarea
               id="descricao"
-              value={formData.descricao}
+              value={formData.description}
               onChange={(e) =>
-                setFormData({ ...formData, descricao: e.target.value })
+                setFormData({ ...formData, description: e.target.value })
               }
               placeholder="Digite a descrição da tarefa"
               rows={3}
@@ -107,10 +107,10 @@ export function TaskEditDialog({
             <div className="space-y-2">
               <Label htmlFor="prioridade">Prioridade</Label>
               <Select
-                value={formData.prioridade}
+                value={formData.priority}
                 onValueChange={(
                   value: "urgente" | "alta" | "media" | "baixa"
-                ) => setFormData({ ...formData, prioridade: value })}
+                ) => setFormData({ ...formData, priority: value })}
               >
                 <SelectTrigger>
                   <SelectValue />
@@ -131,9 +131,9 @@ export function TaskEditDialog({
               <Input
                 id="dataInicio"
                 type="date"
-                value={formatDateForInput(formData.dataInicio)}
+                value={formatDateForInput(formData.startDate)}
                 onChange={(e) =>
-                  setFormData({ ...formData, dataInicio: e.target.value })
+                  setFormData({ ...formData, startDate: e.target.value })
                 }
               />
             </div>
@@ -143,9 +143,9 @@ export function TaskEditDialog({
               <Input
                 id="prazo"
                 type="date"
-                value={formatDateForInput(formData.prazo)}
+                value={formatDateForInput(formData.deadline)}
                 onChange={(e) =>
-                  setFormData({ ...formData, prazo: e.target.value })
+                  setFormData({ ...formData, deadline: e.target.value })
                 }
               />
             </div>

@@ -29,12 +29,12 @@ interface CreateTaskDialogProps {
 
 const emptyTask: Task = {
   id: "",
-  titulo: "",
-  descricao: "",
+  title: "",
+  description: "",
   status: "nao_concluido",
-  prioridade: "baixa",
-  dataInicio: "",
-  prazo: "",
+  priority: "baixa",
+  startDate: "",
+  deadline: "",
 };
 
 export function CreateTaskDialog({ isOpen, onOpenChange, onSave }: CreateTaskDialogProps) {
@@ -60,9 +60,9 @@ export function CreateTaskDialog({ isOpen, onOpenChange, onSave }: CreateTaskDia
           <div className="space-y-2">
             <Label htmlFor="titulo">Título</Label>
             <Input
-              id="titulo"
-              value={formData.titulo}
-              onChange={(e) => setFormData({ ...formData, titulo: e.target.value })}
+              id="title"
+              value={formData.title}
+              onChange={(e) => setFormData({ ...formData, title: e.target.value })}
               placeholder="Digite o título da tarefa"
             />
           </div>
@@ -70,9 +70,9 @@ export function CreateTaskDialog({ isOpen, onOpenChange, onSave }: CreateTaskDia
           <div className="space-y-2">
             <Label htmlFor="descricao">Descrição</Label>
             <Textarea
-              id="descricao"
-              value={formData.descricao}
-              onChange={(e) => setFormData({ ...formData, descricao: e.target.value })}
+              id="description"
+              value={formData.description}
+              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               placeholder="Digite a descrição da tarefa"
               rows={3}
             />
@@ -100,9 +100,9 @@ export function CreateTaskDialog({ isOpen, onOpenChange, onSave }: CreateTaskDia
             <div className="space-y-2">
               <Label htmlFor="prioridade">Prioridade</Label>
               <Select
-                value={formData.prioridade}
+                value={formData.priority}
                 onValueChange={(value: "urgente" | "alta" | "media" | "baixa") => 
-                  setFormData({ ...formData, prioridade: value })
+                  setFormData({ ...formData, priority: value })
                 }
               >
                 <SelectTrigger>
@@ -122,20 +122,20 @@ export function CreateTaskDialog({ isOpen, onOpenChange, onSave }: CreateTaskDia
             <div className="space-y-2">
               <Label htmlFor="dataInicio">Data de Início</Label>
               <Input
-                id="dataInicio"
+                id="startDate"
                 type="date"
-                value={formData.dataInicio}
-                onChange={(e) => setFormData({ ...formData, dataInicio: e.target.value })}
+                value={formData.startDate}
+                onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
               />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="prazo">Prazo</Label>
               <Input
-                id="prazo"
+                id="deadline"
                 type="date"
-                value={formData.prazo}
-                onChange={(e) => setFormData({ ...formData, prazo: e.target.value })}
+                value={formData.deadline}
+                onChange={(e) => setFormData({ ...formData, deadline: e.target.value })}
               />
             </div>
           </div>

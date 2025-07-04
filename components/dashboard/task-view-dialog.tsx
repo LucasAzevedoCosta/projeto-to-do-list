@@ -12,6 +12,7 @@ import { PriorityBadge } from "./priority-badge";
 import { Calendar, Clock, FileText, AlertTriangle } from "lucide-react";
 import { type Task } from "./task-table";
 import { formatDate } from "@/lib/helpers";
+import { isOverdue } from "@/lib/tasks/task-helpers";
 
 interface TaskViewDialogProps {
   task: Task | null;
@@ -26,14 +27,6 @@ export function TaskViewDialog({
 }: TaskViewDialogProps) {
   if (!task) return null;
 
-
-  const isOverdue = (prazo: string, status: string) => {
-    if (status === "concluido") return false;
-    const today = new Date();
-    const deadline = new Date(prazo);
-    return deadline < today;
-  };
-
   const getDaysUntilDeadline = (prazo: string) => {
     const today = new Date();
     const deadline = new Date(prazo);
@@ -42,8 +35,8 @@ export function TaskViewDialog({
     return diffDays;
   };
 
-  const daysUntilDeadline = getDaysUntilDeadline(task.prazo);
-  const overdue = isOverdue(task.prazo, task.status);
+  const daysUntilDeadline = getDaysUntilDeadline(task.deadline);
+  const overdue = isOverdue(task.deadline, task.status);
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
@@ -55,11 +48,11 @@ export function TaskViewDialog({
         <div className="space-y-6 py-4">
           <div>
             <h3 className="text-lg font-semibold text-foreground mb-2">
-              {task.titulo}
+              {task.title}
             </h3>
             <div className="flex gap-2 flex-wrap">
               <TaskStatusBadge status={task.status} />
-              <PriorityBadge priority={task.prioridade} />
+              <PriorityBadge priority={task.priority} />
               {overdue && (
                 <Badge
                   variant="destructive"
@@ -91,7 +84,7 @@ export function TaskViewDialog({
                   Descrição
                 </p>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  {task.descricao}
+                  {task.description}
                 </p>
               </div>
             </div>
@@ -104,7 +97,7 @@ export function TaskViewDialog({
                     Data de Início
                   </p>
                   <p className="text-sm text-muted-foreground">
-                    {formatDate(task.dataInicio)}
+                    {formatDate(task.startDate)}
                   </p>
                 </div>
               </div>
@@ -128,7 +121,7 @@ export function TaskViewDialog({
                         : "text-muted-foreground"
                     }`}
                   >
-                    {formatDate(task.prazo)}
+                    {formatDate(task.deadline)}
                   </p>
                 </div>
               </div>
@@ -140,7 +133,7 @@ export function TaskViewDialog({
                     Criada em
                   </p>
                   <p className="text-sm text-muted-foreground">
-                    {task.dataCriacao ? formatDate(task.dataCriacao) : 'Sem data de criação'}
+                    {task.createdAt ? formatDate(task.createdAt) : 'Sem data de criação'}
                   </p>
                 </div>
               </div>

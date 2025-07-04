@@ -25,3 +25,10 @@ export async function deleteTaskApi(taskId: string) {
 
   return res.json();
 }
+
+export const isOverdue = (deadline: string, status: string) => {
+    if (status === "concluido") return false;
+    const today = new Date();
+    const aDeadline = new Date(deadline);
+    return aDeadline < today;
+  };

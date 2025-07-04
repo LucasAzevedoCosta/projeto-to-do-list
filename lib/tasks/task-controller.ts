@@ -4,12 +4,12 @@ import { eq, and } from "drizzle-orm";
 import { v4 as uuidv4 } from "uuid";
 
 export interface TaskInput {
-  titulo: string;
-  descricao: string;
+  title: string;
+  description: string;
   status: "concluido" | "nao_concluido";
-  prioridade: "urgente" | "alta" | "media" | "baixa";
-  dataInicio: string;
-  prazo: string;
+  priority: "urgente" | "alta" | "media" | "baixa";
+  startDate: string;
+  deadline: string;
   userId: string;
 }
 
@@ -17,26 +17,26 @@ export async function getTasksByUser(userId: string) {
   const tasks = await db.select().from(task).where(eq(task.userId, userId));
   return tasks.map((t) => ({
     id: t.id,
-    titulo: t.title,
-    descricao: t.description,
+    title: t.title,
+    description: t.description,
     status: t.status,
-    prioridade: t.priority,
+    priority: t.priority,
     userId: t.userId,
-    dataCriacao: t.createdAt,
-    prazo: t.deadline,
-    dataInicio: t.startDate,
+    createdAt: t.createdAt,
+    deadline: t.deadline,
+    startDate: t.startDate,
   }));
 }
 
 export async function createTask(input: TaskInput) {
   const newTask = {
     id: uuidv4(),
-    title: input.titulo,
-    description: input.descricao,
+    title: input.title,
+    description: input.description,
     status: input.status,
-    priority: input.prioridade,
-    startDate: new Date(input.dataInicio),
-    deadline: new Date(input.prazo),
+    priority: input.priority,
+    startDate: new Date(input.startDate),
+    deadline: new Date(input.deadline),
     userId: input.userId,
   };
 
@@ -46,14 +46,14 @@ export async function createTask(input: TaskInput) {
 
   return {
     id: created.id,
-    titulo: created.title,
-    descricao: created.description,
+    title: created.title,
+    description: created.description,
     status: created.status,
-    prioridade: created.priority,
+    priority: created.priority,
     userId: created.userId,
-    dataCriacao: created.createdAt,
-    prazo: created.deadline,
-    dataInicio: created.startDate,
+    createdAt: created.createdAt,
+    deadline: created.deadline,
+    startDate: created.startDate,
   };
 }
 
@@ -61,12 +61,12 @@ export async function updateTask(taskId: string, input: Partial<TaskInput>) {
   const updated = await db
     .update(task)
     .set({
-      ...(input.titulo && { title: input.titulo }),
-      ...(input.descricao && { description: input.descricao }),
+      ...(input.title && { title: input.title }),
+      ...(input.description && { description: input.description }),
       ...(input.status && { status: input.status }),
-      ...(input.prioridade && { priority: input.prioridade }),
-      ...(input.dataInicio && { startDate: new Date(input.dataInicio) }),
-      ...(input.prazo && { deadline: new Date(input.prazo) }),
+      ...(input.priority && { priority: input.priority }),
+      ...(input.startDate && { startDate: new Date(input.startDate) }),
+      ...(input.deadline && { deadline: new Date(input.deadline) }),
     })
     .where(eq(task.id, taskId))
     .returning();
@@ -75,14 +75,14 @@ export async function updateTask(taskId: string, input: Partial<TaskInput>) {
 
   return {
     id: result.id,
-    titulo: result.title,
-    descricao: result.description,
+    title: result.title,
+    description: result.description,
     status: result.status,
-    prioridade: result.priority,
+    priority: result.priority,
     userId: result.userId,
-    dataCriacao: result.createdAt,
-    prazo: result.deadline,
-    dataInicio: result.startDate,
+    createdAt: result.createdAt,
+    deadline: result.deadline,
+    startDate: result.startDate,
   };
 }
 

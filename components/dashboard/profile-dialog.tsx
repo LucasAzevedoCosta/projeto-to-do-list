@@ -55,7 +55,6 @@ export function ProfileDialog({ isOpen, onOpenChange }: ProfileDialogProps) {
         <div className="flex flex-col items-center space-y-6 py-4">
           <Avatar className="h-20 w-20 bg-gradient-to-br from-primary to-secondary">
             <AvatarFallback className="bg-gradient-to-br from-primary to-secondary text-card-foreground text-xl">
-              <User className="h-8 w-8" />
               {user?.name[0]}
             </AvatarFallback>
           </Avatar>

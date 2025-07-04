@@ -46,12 +46,12 @@ export default function Dashboard() {
   const filteredTasks = useMemo(() => {
     return tasks.filter((task) => {
       const matchesSearch =
-        task.titulo.toLowerCase().includes(filters.search.toLowerCase()) ||
-        task.descricao.toLowerCase().includes(filters.search.toLowerCase());
+        task.title.toLowerCase().includes(filters.search.toLowerCase()) ||
+        task.description.toLowerCase().includes(filters.search.toLowerCase());
       const matchesStatus =
         filters.status === "all" || task.status === filters.status;
       const matchesPriority =
-        filters.priority === "all" || task.prioridade === filters.priority;
+        filters.priority === "all" || task.priority === filters.priority;
 
       return matchesSearch && matchesStatus && matchesPriority;
     });
@@ -142,7 +142,7 @@ export default function Dashboard() {
         isOpen={!!deleteTask}
         onOpenChange={(open) => !open && setDeleteTask(null)}
         onConfirm={handleDeleteConfirm}
-        taskTitle={deleteTask?.titulo || ""}
+        taskTitle={deleteTask?.title || ""}
       />
     </div>
   );
