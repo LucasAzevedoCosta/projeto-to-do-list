@@ -67,9 +67,9 @@ export function ForgotPasswordForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-xl">Forgot Password</CardTitle>
+          <CardTitle className="text-xl">Esqueceu sua senha</CardTitle>
           <CardDescription>
-            Enter your email to reset your password
+            Digite seu e-mail para redefinir sua senha
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -84,7 +84,7 @@ export function ForgotPasswordForm({
                       <FormItem>
                         <FormLabel>Email</FormLabel>
                         <FormControl>
-                          <Input placeholder="m@example.com" {...field} />
+                          <Input placeholder="m@exemplo.com" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -95,14 +95,14 @@ export function ForgotPasswordForm({
                   {isLoading ? (
                     <Loader2 className="size-4 animate-spin" />
                   ) : (
-                    "Reset Password"
+                    "Redefinir senha"
                   )}
                 </Button>
               </div>
               <div className="text-center text-sm">
-                Don&apos;t have an account?{" "}
+                Não tem uma conta?{" "}
                 <Link href="/signup" className="underline underline-offset-4">
-                  Sign up
+                  Cadastra-se
                 </Link>
               </div>
             </form>
@@ -110,9 +110,9 @@ export function ForgotPasswordForm({
         </CardContent>
       </Card>
       <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-        By clicking continue, you agree to our{" "}
-        <Link href="#">Terms of Service</Link> and{" "}
-        <Link href="#">Privacy Policy</Link>.
+        Ao clicar em continuar, você concorda com nossos{" "}
+        <Link href="#">Termos de Serviço</Link> and{" "}
+        <Link href="#">Política de Privacidade</Link>.
       </div>
     </div>
   );

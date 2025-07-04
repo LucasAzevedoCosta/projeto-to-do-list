@@ -82,8 +82,8 @@ export function ResetPasswordForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-xl">Reset Password</CardTitle>
-          <CardDescription>Enter your new password</CardDescription>
+          <CardTitle className="text-xl">Redefinir senha</CardTitle>
+          <CardDescription>Digite sua nova senha</CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -95,7 +95,7 @@ export function ResetPasswordForm({
                     name="password"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Password</FormLabel>
+                        <FormLabel>Senha</FormLabel>
                         <FormControl>
                           <Input {...field} type="password" />
                         </FormControl>
@@ -110,7 +110,7 @@ export function ResetPasswordForm({
                     name="confirmPassword"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Confirm Password</FormLabel>
+                        <FormLabel>Confirme sua senha</FormLabel>
                         <FormControl>
                           <Input {...field} type="password" />
                         </FormControl>
@@ -123,14 +123,14 @@ export function ResetPasswordForm({
                   {isLoading ? (
                     <Loader2 className="size-4 animate-spin" />
                   ) : (
-                    "Reset Password"
+                    "Redefinir senha"
                   )}
                 </Button>
               </div>
               <div className="text-center text-sm">
-                Don&apos;t have an account?{" "}
+                Não tem uma conta?{" "}
                 <Link href="/signup" className="underline underline-offset-4">
-                  Sign up
+                  Cadastra-se
                 </Link>
               </div>
             </form>
@@ -138,9 +138,9 @@ export function ResetPasswordForm({
         </CardContent>
       </Card>
       <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-        By clicking continue, you agree to our{" "}
-        <Link href="#">Terms of Service</Link> and{" "}
-        <Link href="#">Privacy Policy</Link>.
+        Ao clicar em continuar, você concorda com nossos{" "}
+        <Link href="#">Termos de Serviço</Link> e{" "}
+        <Link href="#">política de Privacidade</Link>.
       </div>
     </div>
   );

@@ -57,7 +57,7 @@ export function TaskTable({ tasks, onTaskAction }: TaskTableProps) {
               Data de Início
             </TableHead>
             <TableHead className="font-semibold text-foreground">
-              deadline
+              Prazo
             </TableHead>
             <TableHead className="font-semibold text-foreground text-right">
               Ações

@@ -32,25 +32,25 @@ const ForgotPasswordEmail = (props: ForgotPasswordEmailProps) => {
             {/* Header */}
             <Section className="text-center mb-[32px]">
               <Heading className="text-[28px] font-bold text-gray-900 m-0 mb-[8px]">
-                Reset Your Password
+                Redefinir a sua senha
               </Heading>
               <Text className="text-[16px] text-gray-600 m-0">
-                We received a request to reset your password
+                Nós recebemos uma requisição para redefinir a sua senha
               </Text>
             </Section>
 
             {/* Main Content */}
             <Section className="mb-[32px]">
               <Text className="text-[16px] text-gray-700 leading-[24px] m-0 mb-[16px]">
-                Hello, {username}
+                Olá, {username}
               </Text>
               <Text className="text-[16px] text-gray-700 leading-[24px] m-0 mb-[16px]">
-                We received a password reset request for your account associated
-                with <strong>{userEmail}</strong>.
+                Recebemos uma solicitação de redefinição de senha para sua conta
+                associada a <strong>{userEmail}</strong>.
               </Text>
               <Text className="text-[16px] text-gray-700 leading-[24px] m-0 mb-[24px]">
-                Click the button below to create a new password. This link will
-                expire in 24 hours for security reasons.
+                Clique no botão abaixo para criar uma nova senha. Este link irá
+                expirar em 24 horas por motivos de segurança.
               </Text>
             </Section>
 
@@ -60,15 +60,15 @@ const ForgotPasswordEmail = (props: ForgotPasswordEmailProps) => {
                 href={resetUrl}
                 className="bg-blue-600 text-white px-[32px] py-[16px] rounded-[8px] text-[16px] font-semibold no-underline box-border inline-block"
               >
-                Reset Password
+                Redefinir senha
               </Button>
             </Section>
 
             {/* Alternative Link */}
             <Section className="mb-[32px]">
               <Text className="text-[14px] text-gray-600 leading-[20px] m-0 mb-[8px]">
-                If the button doesn&apos;t work, copy and paste this link into
-                your browser:
+                Se o botão não funcionar, copie e cole este link no seu
+                navegador:
               </Text>
               <Link
                 href={resetUrl}
@@ -81,24 +81,24 @@ const ForgotPasswordEmail = (props: ForgotPasswordEmailProps) => {
             {/* Security Notice */}
             <Section className="bg-gray-50 p-[20px] rounded-[8px] mb-[32px]">
               <Text className="text-[14px] text-gray-700 leading-[20px] m-0 mb-[8px] font-semibold">
-                Security Notice:
+                Aviso de segurança:
               </Text>
               <Text className="text-[14px] text-gray-600 leading-[20px] m-0 mb-[8px]">
-                • If you didn&apos;t request this password reset, please ignore
-                this email
+                • Se você não solicitou esta redefinição de senha, ignore este
+                e-mail
               </Text>
               <Text className="text-[14px] text-gray-600 leading-[20px] m-0 mb-[8px]">
-                • This link will expire in 24 hours
+                • Este link irá expirar em 24 horas
               </Text>
               <Text className="text-[14px] text-gray-600 leading-[20px] m-0">
-                • For security, never share this link with anyone
+                • Por segurança, nunca compartilhe este link com ninguém
               </Text>
             </Section>
 
             {/* Help Section */}
             <Section className="mb-[32px]">
               <Text className="text-[14px] text-gray-600 leading-[20px] m-0">
-                Need help? Contact our support team at{" "}
+                Precisa de ajuda? Entre em contato com nossa equipe de suporte em{" "}
                 <Link
                   href="mailto:support@company.com"
                   className="text-blue-600"
@@ -111,15 +111,15 @@ const ForgotPasswordEmail = (props: ForgotPasswordEmailProps) => {
             {/* Footer */}
             <Section className="border-t border-gray-200 pt-[24px]">
               <Text className="text-[12px] text-gray-500 leading-[16px] m-0 mb-[8px]">
-                This email was sent to {userEmail}
+                Este e-mail foi enviado para {userEmail}
               </Text>
               <Text className="text-[12px] text-gray-500 leading-[16px] m-0 mb-[8px]">
                 Company Name, 123 Business Street, City, State 12345
               </Text>
               <Text className="text-[12px] text-gray-500 leading-[16px] m-0">
-                © 2025 Company Name. All rights reserved.{" "}
+                © 2025 Company Name. Todos os direitos resevados.{" "}
                 <Link href="#" className="text-gray-500">
-                  Unsubscribe
+                  Cancelar inscrição
                 </Link>
               </Text>
             </Section>
